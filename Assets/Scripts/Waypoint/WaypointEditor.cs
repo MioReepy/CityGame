@@ -40,6 +40,15 @@ namespace WaypointSpase
                 Vector3 offsetTo = waypoint.nextWaipoint.transform.right * -waypoint.nextWaipoint.weight / 2f;
                 Gizmos.DrawLine(waypoint.transform.position + offset, waypoint.nextWaipoint.transform.position + offsetTo);
             }
+
+            if (waypoint.Branches != null)
+            {
+                foreach (Waypoint branch in waypoint.Branches)
+                {
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawLine(waypoint.transform.position, branch.transform.position);
+                }
+            }
         }
         
     }

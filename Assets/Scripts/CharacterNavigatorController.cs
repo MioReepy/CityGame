@@ -1,43 +1,44 @@
-using System;
 using UnityEngine;
 
-public class CharacterNavigatorController : MonoBehaviour
+namespace Character
 {
-    [SerializeField] private float _movementSpeed = 1f;
-    [SerializeField] private float _rotationSpeed = 100f;
-    [SerializeField] private float _stopDistance = 1f;
-    [SerializeField] private string _name;
-    
-    private Vector3 _destination;
-    public bool isReachedDestination;
-
-    private void Update()
+    public class CharacterNavigatorController : MonoBehaviour
     {
-        if (transform.position != _destination)
+        [SerializeField] private float _movementSpeed = 1f;
+        [SerializeField] private float _rotationSpeed = 100f;
+        [SerializeField] private float _stopDistance = 1f;
+
+        private Vector3 _destination;
+        public bool isReachedDestination;
+
+        private void Update()
         {
-            Vector3 destinationDirection = _destination - transform.position;
-            destinationDirection.y = 0f;
-
-            float destinationDistance = destinationDirection.magnitude;
-
-            if (destinationDistance >= _stopDistance)
+            if (transform.position != _destination)
             {
-                isReachedDestination = true;
-                Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-                transform.Translate(Vector3.forward * _movementSpeed * Time.deltaTime);
-            }
-            else
-            {
-                isReachedDestination = false;
+                Vector3 destinationDirection = _destination - transform.position;
+                destinationDirection.y = 0f;
+
+                float destinationDistance = destinationDirection.magnitude;
+
+                if (destinationDistance >= _stopDistance)
+                {
+                    isReachedDestination = true;
+                    Quaternion targetRotation = Quaternion.LookRotation(destinationDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation,
+                        _rotationSpeed * Time.deltaTime);
+                    transform.Translate(Vector3.forward * _movementSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    isReachedDestination = false;
+                }
             }
         }
-    }
 
-    internal void SetDestination(Vector3 pointPosition, string pointName)
-    {
-        _destination = pointPosition;
-        _name = pointName;
-        isReachedDestination = false;
+        internal void SetDestination(Vector3 pointPosition)
+        {
+            _destination = pointPosition;
+            isReachedDestination = false;
+        }
     }
 }

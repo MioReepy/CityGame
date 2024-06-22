@@ -2096,6 +2096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 499914}
   - component: {fileID: 9526412}
+  - component: {fileID: -6760371251601243090}
   - component: {fileID: 2972147984511743664}
   - component: {fileID: 1230063657308072376}
   m_Layer: 0
@@ -2151,6 +2152,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!143 &-6760371251601243090
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183608}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2972147984511743664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2166,7 +2193,6 @@ MonoBehaviour:
   _movementSpeed: 1
   _rotationSpeed: 120
   _stopDistance: 1
-  _name: 
   isReachedDestination: 0
 --- !u!114 &1230063657308072376
 MonoBehaviour:
@@ -2180,8 +2206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b15cd5966632884ebe373590e568a52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWaypoint: {fileID: 0}
   _controller: {fileID: 2972147984511743664}
+  _currentWaypoint: {fileID: 0}
 --- !u!1 &185210
 GameObject:
   m_ObjectHideFlags: 0
