@@ -4,9 +4,9 @@ namespace WaypointSpase
 {
     public class Waypoint : MonoBehaviour
     {
-        internal Waypoint previousWaipoint;
-        internal Waypoint nextWaipoint;
-        [Range(0, 5)] internal float weight = 1f;
+        [SerializeField] internal Waypoint previousWaipoint;
+        [SerializeField] internal Waypoint nextWaipoint;
+        [Range(0, 5)] [SerializeField] internal float weight = 1f;
 
         public Vector3 GetPosition()
         {
