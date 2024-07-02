@@ -4,7 +4,7 @@ namespace Character
 {
     public class CharacterNavigatorController : MonoBehaviour
     {
-        [SerializeField] private float _movementSpeed = 1f;
+        [SerializeField] internal float _movementSpeed = 1f;
         [SerializeField] private float _rotationSpeed = 100f;
         [SerializeField] private float _stopDistance = 1f;
 

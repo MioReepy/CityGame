@@ -2190,7 +2190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f41ec977fb0254c94d942b3ad4be10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 1
+  _movementSpeed: 1.5
   _rotationSpeed: 120
   _stopDistance: 1
   isReachedDestination: 0

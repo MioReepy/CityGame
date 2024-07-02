@@ -10,6 +10,8 @@ namespace WaypointSpase
         [Range(0, 5)] [SerializeField] internal float weight = 1f;
         [Range(0, 1)] [SerializeField] internal float branchRatio = 0.5f;
 
+        internal bool _isStop;
+
         public List<Waypoint> Branches;
         public Vector3 GetPosition()
         {

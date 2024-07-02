@@ -8,6 +8,8 @@ namespace WaypointSpase
         [SerializeField] private CharacterNavigatorController _controller;
         [SerializeField] internal Waypoint _currentWaypoint;
 
+        private float _currentSpeed;
+
         private int _direction;
 
         private void Awake()
@@ -18,11 +20,21 @@ namespace WaypointSpase
 
         private void Start()
         {
+            _currentSpeed = _controller._movementSpeed;
             _controller.SetDestination(_currentWaypoint.GetPosition());
         }
 
         private void Update()
         {
+            if (_currentWaypoint._isStop)
+            {
+                _controller._movementSpeed = 0;
+            }
+            else if (!_currentWaypoint._isStop)
+            {
+                _controller._movementSpeed = _currentSpeed;
+            }
+
             if (!_controller.isReachedDestination)
             {
                 bool shoulBranch = false;
@@ -30,9 +42,7 @@ namespace WaypointSpase
                 if (_currentWaypoint.Branches != null && _currentWaypoint.Branches.Count > 0)
                 {
                     float tempBranch = Random.Range(0f, 1f);
-                    Debug.Log(tempBranch);
                     shoulBranch = tempBranch <= _currentWaypoint.branchRatio ? true : false;
-                    Debug.Log(shoulBranch);
                 }
 
                 if (shoulBranch)
