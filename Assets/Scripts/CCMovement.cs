@@ -10,8 +10,8 @@ namespace Character
         [SerializeField] private float _gravity = 9.81f;
         [SerializeField] private float _border = 50f;
 
+        internal bool _isWalk;
         private CharacterController _characterController;
-        private Vector3 _velosity;
         private float _rotationX = 0f;
         private float _rotationY = 0f;
 
@@ -26,6 +26,15 @@ namespace Character
             MoveCharacter();
             RotationCharacter();
             ApplyGravitation();
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                _isWalk = true;
+            }
+            else
+            {
+                _isWalk = false;
+            }
         }
 
         private void MoveCharacter()
@@ -51,10 +60,9 @@ namespace Character
 
         private void ApplyGravitation()
         {
-            if (_characterController.isGrounded && _velosity.y < 0)
-            {
-                _velosity.y = -2f;
-            }
+            // if (_characterController.isGrounded && _characterController.velocity.y < 0)
+            // {
+            // }
         }
     }
 }
