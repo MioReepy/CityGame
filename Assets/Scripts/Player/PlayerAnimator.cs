@@ -1,4 +1,5 @@
 using Character;
+using Player;
 using UnityEngine;
 
 namespace AnimationSpace
@@ -6,17 +7,17 @@ namespace AnimationSpace
     public class PlayerAnimator : MonoBehaviour
     {
         private Animator _playeranimator;
-        private CCMovement _playerMovement;
+        private PlayerController _playerMovement;
 
         private void Start()
         {
             _playeranimator = GetComponent<Animator>();
-            _playerMovement = GetComponent<CCMovement>();
+            _playerMovement = GetComponent<PlayerController>();
         }
 
-        private void FixedUpdate()
-        {
-            _playeranimator.SetBool("isWalk", _playerMovement._isWalk);
-        }
+        // private void FixedUpdate()
+        // {
+        //     _playeranimator.SetBool("isWalk", _playerMovement._isWalk);
+        // }
     }
 }
