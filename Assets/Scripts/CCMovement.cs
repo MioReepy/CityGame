@@ -25,7 +25,6 @@ namespace Character
         {
             MoveCharacter();
             RotationCharacter();
-            ApplyGravitation();
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
@@ -56,13 +55,6 @@ namespace Character
             _rotationX -= mouseY;
             _rotationX = Mathf.Clamp(_rotationX, -_border, _border);
             _cameraTransform.localRotation = Quaternion.Euler(_rotationX, 0f, 0f);
-        }
-
-        private void ApplyGravitation()
-        {
-            // if (_characterController.isGrounded && _characterController.velocity.y < 0)
-            // {
-            // }
         }
     }
 }
