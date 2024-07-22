@@ -23,6 +23,8 @@ namespace Player
             _actionMove = _playerInputController.actions["Move"];
             _actionJump = _playerInputController.actions["Jump"];
             _actionShoot = _playerInputController.actions["Shoot"];
+
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnEnable()
