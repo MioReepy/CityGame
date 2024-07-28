@@ -19,6 +19,7 @@ namespace Player
         private Vector2 _currentBlendAnim;
         private Vector2 _animVelosity;
         [SerializeField] private float _playerSpeed;
+        [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
         
         public Vector2 MoveInput
@@ -45,6 +46,7 @@ namespace Player
         private void Update()
         {
             MovePlayer();
+            RotateToDirection();
         }
 
         private void MovePlayer()
@@ -54,6 +56,15 @@ namespace Player
             _move = _cameraTransform.right * _moveInput.x + _cameraTransform.forward * _moveInput.y;
             _move.y = 0f;
             _characterController.Move(_move * _playerSpeed * Time.deltaTime);
+        }
+
+        private void RotateToDirection()
+        {
+            if (_moveInput != Vector3.zero)
+            {
+                Quaternion rotation = Quaternion.Euler(0f, _cameraTransform.eulerAngles.y, 0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
+            }
         }
 
         public void ShootGun()
