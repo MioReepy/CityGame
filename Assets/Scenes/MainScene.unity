@@ -169052,6 +169052,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
+    - {fileID: 9595392, guid: adad89669382b0743a2c2f162c9601b0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -327791,6 +327792,8 @@ GameObject:
   - component: {fileID: 2037407619}
   - component: {fileID: 2037407618}
   - component: {fileID: 2037407620}
+  - component: {fileID: 2037407621}
+  - component: {fileID: 2037407622}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -327833,7 +327836,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.9
+  m_Height: 1.83
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -327898,10 +327901,44 @@ MonoBehaviour:
   _gunTransform: {fileID: 0}
   _cameraTransform: {fileID: 62046722}
   _bulletHitMiss: 25
+  _jumpHeight: 1
   _playerSpeed: 5
   _rotationSpeed: 3
   _animSmoothTime: 0.2
-  isJump: 0
+--- !u!114 &2037407621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037407614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f95bf80a652f33d42b0af01daa855413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationPlayTransition: 0.05
+--- !u!95 &2037407622
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2037407614}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 897b34267f422c1499700402763d096e, type: 3}
+  m_Controller: {fileID: 9100000, guid: e8cbf27e415d2064289f9aff8f9dea9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2037761634
 PrefabInstance:
   m_ObjectHideFlags: 0

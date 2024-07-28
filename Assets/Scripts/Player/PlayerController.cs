@@ -1,4 +1,5 @@
 using System;
+using AnimationSpace;
 using UnityEngine;
 namespace Player
 {
@@ -14,10 +15,16 @@ namespace Player
         #endregion
 
         private CharacterController _characterController;
+        private PlayerAnimator _playerAnimator;
         private Vector3 _moveInput;
         private Vector3 _move;
-        private Vector2 _currentBlendAnim;
+        internal Vector2 currentBlendAnim;
         private Vector2 _animVelosity;
+        internal bool isGroung;
+        internal bool isJump;
+        [SerializeField] private float _jumpHeight = 1f;
+        private float _gravityValue = -9.81f;
+        private Vector3 _playerVelosity;
         [SerializeField] private float _playerSpeed;
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
@@ -30,8 +37,6 @@ namespace Player
                 _moveInput.y = value.y;
             }
         }
-
-        public bool isJump;
         
         private void Awake()
         {
@@ -41,18 +46,44 @@ namespace Player
         private void Start()
         {
             _characterController = GetComponent<CharacterController>();
+            _playerAnimator = GetComponent<PlayerAnimator>();
         }
 
         private void Update()
         {
+            GroundCheck();
             MovePlayer();
+            JumpPlayer();
             RotateToDirection();
+        }
+
+        private void GroundCheck()
+        {
+            isGroung = _characterController.isGrounded;
+
+            if (!isGroung && _playerVelosity.y < 0)
+            {
+                _playerVelosity.y = 0;
+                isJump = false;
+            }
+        }
+
+        private void JumpPlayer()
+        {
+            if (isGroung && isJump)
+            {
+                _playerVelosity.y = Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+                _playerAnimator.JumpAnimation();
+            }
+            
+            _playerVelosity.y += _gravityValue * 2 * Time.deltaTime;
+            _characterController.Move(_playerVelosity * Time.deltaTime);
         }
 
         private void MovePlayer()
         {
-            _currentBlendAnim = Vector2.SmoothDamp(_currentBlendAnim, _moveInput, ref _animVelosity, _animSmoothTime);
-            _move = new Vector3(_currentBlendAnim.x, 0f, _currentBlendAnim.y);
+            currentBlendAnim = Vector2.SmoothDamp(currentBlendAnim, _moveInput, ref _animVelosity, _animSmoothTime);
+            _move = new Vector3(currentBlendAnim.x, 0f, currentBlendAnim.y);
             _move = _cameraTransform.right * _moveInput.x + _cameraTransform.forward * _moveInput.y;
             _move.y = 0f;
             _characterController.Move(_move * _playerSpeed * Time.deltaTime);
