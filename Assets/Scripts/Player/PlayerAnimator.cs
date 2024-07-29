@@ -1,5 +1,3 @@
-using System;
-using Character;
 using Player;
 using UnityEngine;
 
