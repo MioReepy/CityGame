@@ -9,12 +9,11 @@ namespace Player
         public float ViewRadius;
         [Range(0, 360)] public float viewAngle;
         [SerializeField] private LayerMask _targetMask;
-        [SerializeField] private LayerMask _obstacleMask;
+        [SerializeField] private LayerMask _enviromentMask;
         public List<Transform> VisibleTarget;
-
         [SerializeField] private float _delayTime = 0.2f;
 
-        void Start()
+        private void Start()
         {
             StartCoroutine("FindTarget", _delayTime);
         }
@@ -25,28 +24,43 @@ namespace Player
             {
                 yield return new WaitForSeconds(delay);
                 FindVisibleTarget();
+                DeleteUnVisibleTarger();
             }
         }
 
-        public void FindVisibleTarget()
+        private void FindVisibleTarget()
         {
-            List<Transform> visibleTarget = new List<Transform>();
             Collider[] targetInRadius = Physics.OverlapSphere(transform.position, ViewRadius, _targetMask);
 
             for (int i = 0; i < targetInRadius.Length; i++)
             {
                 Transform target = targetInRadius[i].transform;
                 Vector3 directionToTarget = (target.position - transform.position).normalized;
-                if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2) ;
-
-                if (Physics.Raycast(transform.position, directionToTarget, _targetMask))
+                
+                if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
                 {
-                    VisibleTarget.Add(target);
+                    if (Physics.Raycast(transform.position, directionToTarget, _targetMask) && !Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
+                    {
+                        VisibleTarget.Add(target);
+                    }
                 }
             }
         }
 
-        public Vector3 DirectionFromAngle(float angleDegrees, bool isAngleGlobal)
+        private void DeleteUnVisibleTarger()
+        {
+            for (int i = 0; i < VisibleTarget.Count; i++)
+            {
+                Vector3 directionToTarget = (VisibleTarget[i].position - transform.position).normalized;
+
+                if (Vector3.Angle(transform.forward, directionToTarget) > viewAngle / 2 || Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
+                {
+                    VisibleTarget.Remove(VisibleTarget[i]);
+                }
+            }
+        }
+        
+        internal Vector3 DirectionFromAngle(float angleDegrees, bool isAngleGlobal)
         {
             if (!isAngleGlobal)
             {
