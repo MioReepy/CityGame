@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player
+namespace PlayerSpace
 {
     public class ObjectPool : MonoBehaviour
     {
         public static ObjectPool SharedInstance;
         
-        [SerializeField] private List<GameObject> _poolObjects;
+        private List<GameObject> _poolObjects;
         [SerializeField] private GameObject _objectToPool;
         [SerializeField] private int _amountToPool;
 

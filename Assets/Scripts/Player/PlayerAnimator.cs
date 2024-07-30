@@ -1,7 +1,6 @@
-using Player;
 using UnityEngine;
 
-namespace AnimationSpace
+namespace PlayerSpace
 {
     public class PlayerAnimator : MonoBehaviour
     {

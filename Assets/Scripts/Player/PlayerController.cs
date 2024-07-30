@@ -1,6 +1,6 @@
-using AnimationSpace;
 using UnityEngine;
-namespace Player
+
+namespace PlayerSpace
 {
     public class PlayerController : MonoBehaviour
     {
@@ -24,6 +24,7 @@ namespace Player
         [SerializeField] private float _jumpHeight = 1f;
         private float _gravityValue = -9.81f;
         private Vector3 _playerVelosity;
+        [SerializeField] private LayerMask _ignoreMask;
         [SerializeField] private float _playerSpeed;
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
@@ -107,21 +108,21 @@ namespace Player
                 bullet.transform.position = _gunTransform.position;
                 bullet.transform.rotation = _gunTransform.rotation;
                 bullet.SetActive(true);
-            }
 
-            BulletController bulletController = GetComponent<BulletController>();
-
-            RaycastHit hit;
-
-            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out hit, Mathf.Infinity))
-            {
-                bulletController.Target = hit.point;
-                bulletController.Hit = true;
-            }
-            else
-            {
-                bulletController.Target = _cameraTransform.position + _cameraTransform.forward * _bulletHitMiss;
-                bulletController.Hit = false;
+                BulletController bulletController = bullet.GetComponent<BulletController>();
+                    
+                Ray ray = new Ray(transform.position, _cameraTransform.forward);
+            
+                if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _ignoreMask)) 
+                {
+                    bulletController.Target = hit.point;
+                    bulletController.Hit = true;
+                }
+                else
+                {
+                    bulletController.Target = _cameraTransform.position + _cameraTransform.forward * _bulletHitMiss;
+                    bulletController.Hit = false;
+                }
             }
         }
     }

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Player
+namespace PlayerSpace
 {
     public class BulletController : MonoBehaviour
     {
@@ -20,6 +20,7 @@ namespace Player
         private IEnumerator DeactivateBulletAfterDelay(GameObject obj)
         {
             yield return new WaitForSeconds(_bulletDestroyTime);
+            
             obj.SetActive(false);
         }
 

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Player
+namespace PlayerSpace
 {
     [CustomEditor(typeof(FieldOfView))]
     public class FieldOfViewEditor : Editor

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Player
+namespace PlayerSpace
 {
     public class FieldOfView : MonoBehaviour
     {
@@ -24,7 +24,7 @@ namespace Player
             {
                 yield return new WaitForSeconds(delay);
                 FindVisibleTarget();
-                DeleteUnVisibleTarger();
+                DeleteInVisibleTarger();
             }
         }
 
@@ -47,7 +47,7 @@ namespace Player
             }
         }
 
-        private void DeleteUnVisibleTarger()
+        private void DeleteInVisibleTarger()
         {
             for (int i = 0; i < VisibleTarget.Count; i++)
             {
