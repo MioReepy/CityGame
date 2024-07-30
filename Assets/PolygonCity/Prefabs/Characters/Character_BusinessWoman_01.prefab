@@ -2101,6 +2101,7 @@ GameObject:
   - component: {fileID: -2384401786076035214}
   - component: {fileID: -5651353900185544365}
   - component: {fileID: 3855833812160870014}
+  - component: {fileID: -3362068437989217334}
   m_Layer: 7
   m_Name: Character_BusinessWoman_01
   m_TagString: Untagged
@@ -2143,7 +2144,7 @@ Animator:
   m_GameObject: {fileID: 183608}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 897b34267f422c1499700402763d096e, type: 3}
-  m_Controller: {fileID: 9100000, guid: e8cbf27e415d2064289f9aff8f9dea9d, type: 2}
+  m_Controller: {fileID: 9100000, guid: b4784be95b750f747a6da6e998a31355, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2246,6 +2247,28 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!195 &-3362068437989217334
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183608}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.3
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &185210
 GameObject:
   m_ObjectHideFlags: 0

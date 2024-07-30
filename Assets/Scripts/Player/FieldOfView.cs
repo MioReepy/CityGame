@@ -12,6 +12,22 @@ namespace Player
         [SerializeField] private LayerMask _obstacleMask;
         public List<Transform> VisibleTarget;
 
+        [SerializeField] private float _delayTime = 0.2f;
+
+        void Start()
+        {
+            StartCoroutine("FindTarget", _delayTime);
+        }
+
+        IEnumerator FindTarget(float delay)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(delay);
+                FindVisibleTarget();
+            }
+        }
+
         public void FindVisibleTarget()
         {
             List<Transform> visibleTarget = new List<Transform>();

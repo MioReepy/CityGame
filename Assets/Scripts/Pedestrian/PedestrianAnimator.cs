@@ -1,7 +1,6 @@
-using Character;
 using UnityEngine;
 
-namespace AnimationSpace
+namespace CharacterSpase
 {
     public class PedestrianAnimator : MonoBehaviour
     {
@@ -20,3 +19,4 @@ namespace AnimationSpace
         }
     }
 }
+

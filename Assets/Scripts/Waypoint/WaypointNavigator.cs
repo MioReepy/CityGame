@@ -1,4 +1,4 @@
-using Character;
+using CharacterSpase;
 using UnityEngine;
 
 namespace WaypointSpase

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Character
+namespace CharacterSpase
 {
     public class CharacterNavigatorController : MonoBehaviour
     {

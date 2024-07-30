@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using WaypointSpase;
 
-namespace Character
+namespace CharacterSpase
 {
     public class PedestrianSpawner : MonoBehaviour
     {
@@ -20,8 +20,8 @@ namespace Character
 
             while (count < _pedestrianCount)
             {
-                GameObject obj = Instantiate(_pedestrianPrefab);
                 Transform child = transform.GetChild(Random.Range(0, transform.childCount));
+                GameObject obj = Instantiate(_pedestrianPrefab, child.transform);
                 obj.GetComponent<WaipointNavigator>()._currentWaypoint = child.GetComponent<Waypoint>();
                 obj.transform.position = child.position;
 
