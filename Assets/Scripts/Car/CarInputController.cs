@@ -38,14 +38,12 @@ namespace CarSpace
         private void StartBreak()
         {
             _carController._isBreak = true;
-            Debug.Log(_carController._isBreak);
             
         }        
         
         private void CancelBreak()
         {
             _carController._isBreak = false;
-            Debug.Log(_carController._isBreak);
         }
         
         private void OnDisable()

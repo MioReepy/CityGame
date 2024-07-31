@@ -21,11 +21,15 @@ namespace PlayerSpace
         private Vector2 _animVelosity;
         internal bool isGroung;
         internal bool isJump;
+        internal bool isRun;
+        internal bool isWalk;
+        internal bool isAim;
         [SerializeField] private float _jumpHeight = 1f;
         private float _gravityValue = -9.81f;
         private Vector3 _playerVelosity;
         [SerializeField] private LayerMask _ignoreMask;
-        [SerializeField] private float _playerSpeed;
+        [SerializeField] private float _playerWalkSpeed = 1f;
+        [SerializeField] private float _playerRunSpeed = 2f;
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
         
@@ -82,11 +86,22 @@ namespace PlayerSpace
 
         private void MovePlayer()
         {
+            float currentSpeed;
+
+            if (!isRun)
+            {
+                currentSpeed = _playerWalkSpeed;
+            }
+            else
+            {
+                currentSpeed = _playerRunSpeed;
+            }
+
             currentBlendAnim = Vector2.SmoothDamp(currentBlendAnim, _moveInput, ref _animVelosity, _animSmoothTime);
             _move = new Vector3(currentBlendAnim.x, 0f, currentBlendAnim.y);
             _move = _cameraTransform.right * _moveInput.x + _cameraTransform.forward * _moveInput.y;
             _move.y = 0f;
-            _characterController.Move(_move * _playerSpeed * Time.deltaTime);
+            _characterController.Move(_move * currentSpeed * Time.deltaTime);
         }
 
         private void RotateToDirection()
@@ -102,7 +117,7 @@ namespace PlayerSpace
         {
             GameObject bullet = ObjectPool.SharedInstance.GetPoolesBullet();
 
-            if (bullet != null)
+            if (bullet != null && isAim)
             {
                 bullet.transform.parent = _barrel;
                 bullet.transform.position = _gunTransform.position;

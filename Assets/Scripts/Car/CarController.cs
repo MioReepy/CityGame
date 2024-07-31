@@ -53,17 +53,14 @@ namespace CarSpace
             if (_isBreak)
             {
                 _currentBreakeForce = _breakForce;
-                // Debug.Log(_isBreak);
             }
             else if (_moveInput.y == 0f)
             {
                 _currentBreakeForce = _breakForce / _slowingForce;
-                // Debug.Log(_isBreak);
             }
             else
             {
                 _currentBreakeForce = 0f;
-                // Debug.Log(_isBreak);
             }
 
             _fl_Wheel_Collider.motorTorque = _currentAcceleration;

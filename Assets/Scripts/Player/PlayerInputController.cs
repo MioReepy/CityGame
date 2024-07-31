@@ -13,13 +13,18 @@ namespace PlayerSpace
         #region InputAction
 
         private PlayerInput _playerInputController;
-        internal InputAction _actionMove;
+        private InputAction _actionMove;
+        private InputAction _actionRun;
         private InputAction _actionJump;
         private InputAction _actionShoot;
         private InputAction _actionAim;
 
         #endregion
 
+        public delegate Action Aim();
+
+        public event Aim OnAim;
+        
         private void Awake()
         {
             _playerInputController = GetComponent<PlayerInput>();
@@ -30,6 +35,7 @@ namespace PlayerSpace
             _actionJump = _playerInputController.actions["Jump"];
             _actionShoot = _playerInputController.actions["Shoot"];
             _actionAim = _playerInputController.actions["Aim"];
+            _actionRun = _playerInputController.actions["Run"];
 
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -39,6 +45,8 @@ namespace PlayerSpace
             _actionShoot.performed += _ => Shooting();
             _actionAim.performed += _ => StartAim();
             _actionAim.canceled += _ => CancelAim();
+            _actionRun.performed += _ => StartRun();
+            _actionRun.canceled += _ => CancelRun();
         }
 
         private void Shooting()
@@ -56,6 +64,25 @@ namespace PlayerSpace
         {
             Vector2 input = _actionMove.ReadValue<Vector2>();
             _playerController.MoveInput = input;
+
+            if (input != Vector2.zero)
+            {
+                _playerController.isWalk = true;
+            }
+            else
+            {
+                _playerController.isWalk = false;
+            }
+        }
+
+        private void StartRun()
+        {
+            _playerController.isRun = true;
+        }
+
+        private void CancelRun()
+        {
+            _playerController.isRun = false;
         }
 
         private void Jump()
@@ -68,19 +95,21 @@ namespace PlayerSpace
         
         private void StartAim()
         {
-            _playerAnimator.StartAim();
+            _playerController.isAim = true;
         }
 
         private void CancelAim()
         {
-            _playerAnimator.CancelAim();
+            _playerController.isAim = false;
         }
         
         private void OnDisable()
         {
             _actionShoot.performed -= _ => Shooting();
-            _actionAim.performed += _ => StartAim();
-            _actionAim.canceled += _ => CancelAim();
+            _actionAim.performed -= _ => StartAim();
+            _actionAim.canceled -= _ => CancelAim();
+            _actionRun.performed -= _ => StartRun();
+            _actionRun.canceled -= _ => CancelRun();
         }
     }
 }

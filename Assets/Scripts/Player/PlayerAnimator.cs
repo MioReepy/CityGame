@@ -1,16 +1,14 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace PlayerSpace
 {
     public class PlayerAnimator : MonoBehaviour
     {
         private Animator _playerAnimator;
-        private PlayerController _playerMovement;
+        private PlayerController _playerController;
         private int _moveXAnimationParametrId;
         private int _moveYAnimationParametrId;
         private int _jumpAnimation;
-        private bool _isAim;
 
         [SerializeField] private float _animationPlayTransition = 0.1f;
 
@@ -24,28 +22,18 @@ namespace PlayerSpace
         private void Start()
         {
             _playerAnimator = GetComponent<Animator>();
-            _playerMovement = GetComponent<PlayerController>();
+            _playerController = GetComponent<PlayerController>();
         }
         
         private void FixedUpdate()
         {
-            _playerAnimator.SetFloat(_moveXAnimationParametrId, _playerMovement.currentBlendAnim.x);
-            _playerAnimator.SetFloat(_moveYAnimationParametrId, _playerMovement.currentBlendAnim.y);
-            _playerAnimator.SetBool("isAim", _isAim);
+            _playerAnimator.SetFloat(_moveXAnimationParametrId, _playerController.currentBlendAnim.x);
+            _playerAnimator.SetFloat(_moveYAnimationParametrId, _playerController.currentBlendAnim.y);
+            _playerAnimator.SetBool("isRun", _playerController.isRun);
+            _playerAnimator.SetBool("isAim", _playerController.isAim);
+            _playerAnimator.SetBool("isWalk", _playerController.isWalk);
         }
-
-        internal void StartAim()
-        {
-            _isAim = true;
-            Debug.Log("true");
-        }
-
-        internal void CancelAim()
-        {
-            _isAim = false;
-            Debug.Log("false");
-        }
-
+        
         internal void JumpAnimation()
         {
             _playerAnimator.CrossFade(_jumpAnimation, _animationPlayTransition);
