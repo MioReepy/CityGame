@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PlayerSpace
 {
@@ -9,6 +10,8 @@ namespace PlayerSpace
         private int _moveXAnimationParametrId;
         private int _moveYAnimationParametrId;
         private int _jumpAnimation;
+        private bool _isAim;
+
         [SerializeField] private float _animationPlayTransition = 0.1f;
 
         private void Awake()
@@ -23,11 +26,24 @@ namespace PlayerSpace
             _playerAnimator = GetComponent<Animator>();
             _playerMovement = GetComponent<PlayerController>();
         }
-
+        
         private void FixedUpdate()
         {
             _playerAnimator.SetFloat(_moveXAnimationParametrId, _playerMovement.currentBlendAnim.x);
             _playerAnimator.SetFloat(_moveYAnimationParametrId, _playerMovement.currentBlendAnim.y);
+            _playerAnimator.SetBool("isAim", _isAim);
+        }
+
+        internal void StartAim()
+        {
+            _isAim = true;
+            Debug.Log("true");
+        }
+
+        internal void CancelAim()
+        {
+            _isAim = false;
+            Debug.Log("false");
         }
 
         internal void JumpAnimation()

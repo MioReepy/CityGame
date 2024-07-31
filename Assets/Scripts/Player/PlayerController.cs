@@ -100,7 +100,7 @@ namespace PlayerSpace
 
         public void ShootGun()
         {
-            GameObject bullet = ObjectPool.SharedInstance.GetPoolesObject();
+            GameObject bullet = ObjectPool.SharedInstance.GetPoolesBullet();
 
             if (bullet != null)
             {
@@ -124,6 +124,11 @@ namespace PlayerSpace
                     bulletController.Hit = false;
                 }
             }
+        }
+
+        public void AimGun()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
