@@ -32,6 +32,7 @@ namespace PlayerSpace
             _playerAnimator.SetBool("isRun", _playerController.isRun);
             _playerAnimator.SetBool("isAim", _playerController.isAim);
             _playerAnimator.SetBool("isWalk", _playerController.isWalk);
+            _playerAnimator.SetBool("isDrive", _playerController.isDrive);
         }
         
         internal void JumpAnimation()

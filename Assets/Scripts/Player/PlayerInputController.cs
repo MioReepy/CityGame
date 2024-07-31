@@ -8,7 +8,6 @@ namespace PlayerSpace
     public class PlayerInputController : MonoBehaviour
     {
         private PlayerController _playerController;
-        private PlayerAnimator _playerAnimator;
         
         #region InputAction
 
@@ -18,24 +17,21 @@ namespace PlayerSpace
         private InputAction _actionJump;
         private InputAction _actionShoot;
         private InputAction _actionAim;
+        private InputAction _actionDrive;
 
         #endregion
-
-        public delegate Action Aim();
-
-        public event Aim OnAim;
         
         private void Awake()
         {
             _playerInputController = GetComponent<PlayerInput>();
             _playerController = GetComponent<PlayerController>();
-            _playerAnimator = GetComponent<PlayerAnimator>();
             
             _actionMove = _playerInputController.actions["Move"];
             _actionJump = _playerInputController.actions["Jump"];
             _actionShoot = _playerInputController.actions["Shoot"];
             _actionAim = _playerInputController.actions["Aim"];
             _actionRun = _playerInputController.actions["Run"];
+            _actionDrive = _playerInputController.actions["Drive"];
 
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -43,15 +39,11 @@ namespace PlayerSpace
         private void OnEnable()
         {
             _actionShoot.performed += _ => Shooting();
+            _actionDrive.performed += _ => Driveing();
             _actionAim.performed += _ => StartAim();
             _actionAim.canceled += _ => CancelAim();
             _actionRun.performed += _ => StartRun();
             _actionRun.canceled += _ => CancelRun();
-        }
-
-        private void Shooting()
-        {
-            _playerController.ShootGun();
         }
 
         private void Update()
@@ -75,6 +67,11 @@ namespace PlayerSpace
             }
         }
 
+        private void Shooting()
+        {
+            _playerController.ShootGun();
+        }
+
         private void StartRun()
         {
             _playerController.isRun = true;
@@ -92,7 +89,7 @@ namespace PlayerSpace
                 _playerController.isJump = true;
             }
         }
-        
+
         private void StartAim()
         {
             _playerController.isAim = true;
@@ -102,10 +99,16 @@ namespace PlayerSpace
         {
             _playerController.isAim = false;
         }
-        
+
+        private void Driveing()
+        {
+            _playerController.Driving();
+        }
+
         private void OnDisable()
         {
             _actionShoot.performed -= _ => Shooting();
+            _actionDrive.performed -= _ => Driveing();
             _actionAim.performed -= _ => StartAim();
             _actionAim.canceled -= _ => CancelAim();
             _actionRun.performed -= _ => StartRun();

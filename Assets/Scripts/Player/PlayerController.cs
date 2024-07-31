@@ -1,3 +1,4 @@
+using CarSpace;
 using UnityEngine;
 
 namespace PlayerSpace
@@ -24,15 +25,18 @@ namespace PlayerSpace
         internal bool isRun;
         internal bool isWalk;
         internal bool isAim;
+        public bool isDrive;
         [SerializeField] private float _jumpHeight = 1f;
         private float _gravityValue = -9.81f;
         private Vector3 _playerVelosity;
         [SerializeField] private LayerMask _ignoreMask;
+        [SerializeField] private LayerMask _driveMask;
         [SerializeField] private float _playerWalkSpeed = 1f;
         [SerializeField] private float _playerRunSpeed = 2f;
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
-        
+        [SerializeField] private float _maxDriveDistance = 5f;
+
         public Vector2 MoveInput
         {
             set
@@ -137,6 +141,18 @@ namespace PlayerSpace
                 {
                     bulletController.Target = _cameraTransform.position + _cameraTransform.forward * _bulletHitMiss;
                     bulletController.Hit = false;
+                }
+            }
+        }
+
+        public void Driving()
+        {
+            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit raycastHit, _maxDriveDistance))
+            {
+                if (raycastHit.transform.TryGetComponent(out SelectedCar car))
+                {
+                    car.DriveCar();
+                    isDrive = true;
                 }
             }
         }
