@@ -9,12 +9,11 @@ namespace PlayerSpace
     {
         private PlayerController _playerController;
         private PlayerAnimator _playerAnimator;
-        // [SerializeField] private AimCamera _aimCamera;
         
         #region InputAction
 
         private PlayerInput _playerInputController;
-        private InputAction _actionMove;
+        internal InputAction _actionMove;
         private InputAction _actionJump;
         private InputAction _actionShoot;
         private InputAction _actionAim;
@@ -34,11 +33,6 @@ namespace PlayerSpace
 
             Cursor.lockState = CursorLockMode.Locked;
         }
-
-        // private void Start()
-        // {
-        //     _aimCamera = GetComponent<AimCamera>();
-        // }
 
         private void OnEnable()
         {
@@ -75,13 +69,11 @@ namespace PlayerSpace
         private void StartAim()
         {
             _playerAnimator.StartAim();
-            // _aimCamera.StartAim();
         }
 
         private void CancelAim()
         {
             _playerAnimator.CancelAim();
-            // _aimCamera.CancelAim();
         }
         
         private void OnDisable()
