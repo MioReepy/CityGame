@@ -37,9 +37,16 @@ namespace PlayerSpace
         private void OnCollisionEnter(Collision collision)
         {
             ContactPoint contact = collision.GetContact(0);
-            Instantiate(_bulletDecals, contact.point + contact.normal * 0.001f,
-                Quaternion.LookRotation(contact.normal));
-            gameObject.SetActive(false);
+            
+            GameObject decal = ObjectPool.SharedInstance.GetPoolesDecals();
+
+            if (decal != null)
+            {
+                decal.transform.position = contact.point + contact.normal * 0.001f;
+                decal.transform.rotation = Quaternion.LookRotation(contact.normal);
+                decal.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

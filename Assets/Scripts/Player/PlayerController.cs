@@ -125,10 +125,5 @@ namespace PlayerSpace
                 }
             }
         }
-
-        public void AimGun()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

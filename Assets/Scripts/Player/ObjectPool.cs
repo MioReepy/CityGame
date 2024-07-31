@@ -60,7 +60,7 @@ namespace PlayerSpace
             {
                 if (!_decalObjects[i].activeInHierarchy)
                 {
-                    return _poolObjects[i];
+                    return _decalObjects[i];
                 }
             }
 
