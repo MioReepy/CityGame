@@ -53,7 +53,7 @@ namespace PlayerSpace
             {
                 Vector3 directionToTarget = (VisibleTarget[i].position - transform.position).normalized;
 
-                if (Vector3.Angle(transform.forward, directionToTarget) > viewAngle / 2 || Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
+                if (ViewRadius > directionToTarget.magnitude || Vector3.Angle(transform.forward, directionToTarget) > viewAngle / 2 || Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
                 {
                     VisibleTarget.Remove(VisibleTarget[i]);
                 }
