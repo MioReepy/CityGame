@@ -1,4 +1,3 @@
-using System;
 using CarSpace;
 using Cinemachine;
 using PlayerSpace;
@@ -19,6 +18,7 @@ namespace CameraSpace
             PlayerInputController.OnStratAim += ActiveAimCamera;
             PlayerInputController.OnCancelAim += ActiveMainCamera;
             SelectedCar.OnDrive += ActiveDriveCamera;
+            CarInputController.OnExit += ActiveMainCamera;
         }
 
         private void Start()
@@ -53,6 +53,8 @@ namespace CameraSpace
             PlayerInputController.OnStratAim -= ActiveAimCamera;
             PlayerInputController.OnCancelAim -= ActiveMainCamera;
             SelectedCar.OnDrive -= ActiveDriveCamera;
+            CarInputController.OnExit -= ActiveMainCamera;
+
         }
     }
 }

@@ -25,7 +25,6 @@ namespace PlayerSpace
         internal bool isWalk;
         internal bool isAim;
         private float _currentSpeed;
-        public bool isDrive;
         [SerializeField] private float _jumpHeight = 1f;
         private Vector3 _playerVelosity;
         [SerializeField] private LayerMask _ignoreMask;
@@ -38,6 +37,8 @@ namespace PlayerSpace
 
         private const float _gravityValue = -9.81f;
         [SerializeField] private float _gravityForce = 0.5f;
+
+        private Transform _driverPlace;
 
         public Vector2 MoveInput
         {
@@ -183,7 +184,6 @@ namespace PlayerSpace
                 if (raycastHit.transform.TryGetComponent(out SelectedCar car))
                 {
                     car.DriveCar();
-                    isDrive = true;
                 }
             }
         }
