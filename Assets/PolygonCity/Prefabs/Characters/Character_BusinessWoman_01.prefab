@@ -2104,7 +2104,7 @@ GameObject:
   - component: {fileID: -3362068437989217334}
   m_Layer: 7
   m_Name: Character_BusinessWoman_01
-  m_TagString: Untagged
+  m_TagString: Pedestrian
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2170,7 +2170,6 @@ MonoBehaviour:
   _movementSpeed: 1.5
   _rotationSpeed: 120
   _stopDistance: 1
-  isReachedDestination: 0
 --- !u!114 &1230063657308072376
 MonoBehaviour:
   m_ObjectHideFlags: 0

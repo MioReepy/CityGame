@@ -15,12 +15,6 @@ namespace CameraSpace
 
         #endregion
 
-        #region Player
-
-        [SerializeField] private PlayerController _playerController;
-
-        #endregion
-
         private void OnEnable()
         {
             PlayerInputController.OnStratAim += ActiveAimCamera;
@@ -31,7 +25,6 @@ namespace CameraSpace
 
         private void Start()
         {
-            _playerController.GetComponent<PlayerController>();
             ActiveMainCamera();
         }
 

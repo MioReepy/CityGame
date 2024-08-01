@@ -5,7 +5,7 @@ public class NavMeshMove : MonoBehaviour
 {
     private NavMeshAgent _agent;
 
-    private void Start()
+    private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
     }
