@@ -5,19 +5,33 @@ namespace CarSpace
 {
     public class CarInputController : MonoBehaviour
     {
-        private PlayerInput _carInputController;
-        private CarController _carController;
+        #region InputActions
+
         private InputAction _actionMove;
         private InputAction _actionBreak;
         private InputAction _actionExitCar;
+        private PlayerInput _carInputController;
         
+        #endregion
+
+        #region CarController
+
+        private CarController _carController;
+
+        #endregion
+
+        #region Events
+
         public delegate void Interact();
-        public static event Interact OnExit;
+        public static event Interact OnGetOutOfTheCar;
+
+        #endregion
 
         private void Awake()
         {
             _carInputController = GetComponent<PlayerInput>();
             _carController = GetComponent<CarController>();
+            
             _actionMove = _carInputController.actions["Move"];
             _actionBreak = _carInputController.actions["Break"];
             _actionExitCar = _carInputController.actions["Exit"];
@@ -43,18 +57,17 @@ namespace CarSpace
 
         private void StartBreak()
         {
-            _carController._isBreak = true;
-            
+            _carController.isBreak = true;
         }
 
         private void CancelBreak()
         {
-            _carController._isBreak = false;
+            _carController.isBreak = false;
         }
 
         private void ExitCar()
         {
-            OnExit?.Invoke();
+            OnGetOutOfTheCar?.Invoke();
         }
 
         private void OnDisable()

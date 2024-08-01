@@ -6,14 +6,15 @@ namespace PlayerSpace
     public class ObjectPool : MonoBehaviour
     {
         public static ObjectPool SharedInstance;
-        
-        private List<GameObject> _poolObjects;
-        private List<GameObject> _decalObjects;
+
         [SerializeField] private GameObject _bulletToPool;
         [SerializeField] private GameObject _barrelToBullet;
         [SerializeField] private GameObject _decalToPool;
         [SerializeField] private GameObject _barrelToDecal;
         [SerializeField] private int _amountToPool;
+        
+        private List<GameObject> _poolObjects;
+        private List<GameObject> _decalObjects;
 
         private void Awake()
         {
@@ -24,6 +25,7 @@ namespace PlayerSpace
         {
             _poolObjects = new List<GameObject>();
             _decalObjects = new List<GameObject>();
+            
             GameObject poolTemp;
 
             for (int i = 0; i < _amountToPool; i++)

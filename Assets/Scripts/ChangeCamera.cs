@@ -7,18 +7,26 @@ namespace CameraSpace
 {
     public class ChangeCamera : MonoBehaviour
     {
+        #region Cameras
+
         [SerializeField] private CinemachineVirtualCamera _mainCamera;
         [SerializeField] private CinemachineVirtualCamera _aimCamera;
         [SerializeField] private CinemachineVirtualCamera _driverCamera;
 
+        #endregion
+
+        #region Player
+
         [SerializeField] private PlayerController _playerController;
+
+        #endregion
 
         private void OnEnable()
         {
             PlayerInputController.OnStratAim += ActiveAimCamera;
             PlayerInputController.OnCancelAim += ActiveMainCamera;
-            SelectedCar.OnDrive += ActiveDriveCamera;
-            CarInputController.OnExit += ActiveMainCamera;
+            SelectedCar.OnGetIntoTheCar += ActiveDriveCamera;
+            CarInputController.OnGetOutOfTheCar += ActiveMainCamera;
         }
 
         private void Start()
@@ -52,8 +60,8 @@ namespace CameraSpace
         {
             PlayerInputController.OnStratAim -= ActiveAimCamera;
             PlayerInputController.OnCancelAim -= ActiveMainCamera;
-            SelectedCar.OnDrive -= ActiveDriveCamera;
-            CarInputController.OnExit -= ActiveMainCamera;
+            SelectedCar.OnGetIntoTheCar -= ActiveDriveCamera;
+            CarInputController.OnGetOutOfTheCar -= ActiveMainCamera;
 
         }
     }

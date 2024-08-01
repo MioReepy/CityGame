@@ -9,7 +9,7 @@ namespace CharacterSpase
         [SerializeField] private float _stopDistance = 1f;
 
         private Vector3 _destination;
-        public bool isReachedDestination;
+        internal bool isReachedDestination;
 
         private void Update()
         {

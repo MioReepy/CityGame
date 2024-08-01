@@ -5,26 +5,35 @@ namespace CarSpace
 {
     public class CarController : MonoBehaviour
     {
+        #region Wheels
+
         [SerializeField] private WheelCollider _fl_Wheel_Collider;
         [SerializeField] private WheelCollider _fr_Wheel_Collider;
         [SerializeField] private WheelCollider _bl_Wheel_Collider;
         [SerializeField] private WheelCollider _br_Wheel_Collider;
+
+        #endregion
+
+        #region CarParameters
+
+        private Rigidbody _rigidbody;
+        private PlayerInputController _playerInputController;
 
         [SerializeField] private float _acceleration = 500f;
         [SerializeField] private float _breakForce = 400f;
         [SerializeField] private float _slowingForce = 50f;
         [SerializeField] private float _maxTurnAngle = 15f;
 
+        #endregion
+
+        #region CurrentStates
+
         private float _currentAcceleration;
         private float _currentBreakeForce;
         private float _currentTurnAngle;
-        internal bool _isBreak;
-
-        private Rigidbody _rigidbody;
-        private PlayerInputController _playerInputController;
+        internal bool isBreak;
 
         private Vector3 _moveInput;
-
         public Vector2 MoveInput
         {
             set
@@ -33,6 +42,8 @@ namespace CarSpace
                 _moveInput.y = value.y;
             }
         }
+
+        #endregion
         
         private void Start()
         {
@@ -50,7 +61,7 @@ namespace CarSpace
         {
             _currentAcceleration = _moveInput.y * _acceleration;
 
-            if (_isBreak)
+            if (isBreak)
             {
                 _currentBreakeForce = _breakForce;
             }

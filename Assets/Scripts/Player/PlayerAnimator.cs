@@ -4,13 +4,13 @@ namespace PlayerSpace
 {
     public class PlayerAnimator : MonoBehaviour
     {
+        [SerializeField] private float _animationPlayTransition = 0.1f;
+        
         private Animator _playerAnimator;
         private PlayerController _playerController;
         private int _moveXAnimationParametrId;
         private int _moveYAnimationParametrId;
         private int _jumpAnimation;
-
-        [SerializeField] private float _animationPlayTransition = 0.1f;
 
         private void Awake()
         {

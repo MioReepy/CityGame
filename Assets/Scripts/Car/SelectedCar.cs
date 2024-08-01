@@ -5,19 +5,31 @@ namespace CarSpace
 {
     public class SelectedCar : MonoBehaviour
     {
-        [SerializeField] private GameObject _player;
-        [SerializeField] private GameObject _playerPlace;
+        #region CarParameters
+
         private PlayerInput _playerInput;
         private CarController _carController;
         private CarInputController _carInputController;
 
-        public delegate void Drive();
+        #endregion
 
-        public static Drive OnDrive;
+        #region Player
+
+        [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject _playerPlace;
+
+        #endregion
+
+        #region Events
+
+        public delegate void Drive();
+        public static Drive OnGetIntoTheCar;
+
+        #endregion
 
         private void OnEnable()
         {
-            CarInputController.OnExit += ExitCar;
+            CarInputController.OnGetOutOfTheCar += ExitCar;
         }
 
         private void Start()
@@ -31,9 +43,10 @@ namespace CarSpace
             _playerInput.enabled = true;
             _carController.enabled = true;
             _carInputController.enabled = true;
-            OnDrive?.Invoke();
-        }        
-        internal void ExitCar()
+            OnGetIntoTheCar?.Invoke();
+        }
+
+        private void ExitCar()
         {
             _playerInput.enabled = false;
             _carController.enabled = false;
@@ -46,7 +59,7 @@ namespace CarSpace
         
         private void OnDisable()
         {
-            CarInputController.OnExit -= ExitCar;
+            CarInputController.OnGetOutOfTheCar -= ExitCar;
         }
     }
 }

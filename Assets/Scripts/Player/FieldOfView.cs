@@ -6,12 +6,21 @@ namespace PlayerSpace
 {
     public class FieldOfView : MonoBehaviour
     {
-        public float ViewRadius;
-        [Range(0, 360)] public float viewAngle;
+        #region Layers
+
         [SerializeField] private LayerMask _targetMask;
         [SerializeField] private LayerMask _enviromentMask;
-        public List<Transform> VisibleTarget;
+
+        #endregion
+
+        #region AreaSettings
+
+        [Range(0, 360)] public float viewAngle;
         [SerializeField] private float _delayTime = 0.2f;
+        public List<Transform> VisibleTarget;
+        internal float viewRadius;
+
+        #endregion
 
         private void Start()
         {
@@ -30,7 +39,7 @@ namespace PlayerSpace
 
         private void FindVisibleTarget()
         {
-            Collider[] targetInRadius = Physics.OverlapSphere(transform.position, ViewRadius, _targetMask);
+            Collider[] targetInRadius = Physics.OverlapSphere(transform.position, viewRadius, _targetMask);
 
             for (int i = 0; i < targetInRadius.Length; i++)
             {
@@ -39,7 +48,8 @@ namespace PlayerSpace
                 
                 if (Vector3.Angle(transform.forward, directionToTarget) < viewAngle / 2)
                 {
-                    if (Physics.Raycast(transform.position, directionToTarget, _targetMask) && !Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
+                    if (Physics.Raycast(transform.position, directionToTarget, _targetMask) && !Physics.Raycast(transform.position, 
+                            directionToTarget, viewRadius, _enviromentMask))
                     {
                         VisibleTarget.Add(target);
                     }
@@ -53,7 +63,8 @@ namespace PlayerSpace
             {
                 Vector3 directionToTarget = (VisibleTarget[i].position - transform.position).normalized;
 
-                if (ViewRadius > directionToTarget.magnitude || Vector3.Angle(transform.forward, directionToTarget) > viewAngle / 2 || Physics.Raycast(transform.position, directionToTarget, ViewRadius, _enviromentMask))
+                if (viewRadius > directionToTarget.magnitude || Vector3.Angle(transform.forward, directionToTarget) > viewAngle / 2 || 
+                    Physics.Raycast(transform.position, directionToTarget, viewRadius, _enviromentMask))
                 {
                     VisibleTarget.Remove(VisibleTarget[i]);
                 }

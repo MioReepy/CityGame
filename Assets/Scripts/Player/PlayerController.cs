@@ -11,35 +11,52 @@ namespace PlayerSpace
         [SerializeField] private Transform _gunTransform;
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private float _bulletHitMiss = 25f;
+        [SerializeField] private LayerMask _ignoreMask;
         
         #endregion
 
-        private CharacterController _characterController;
-        private PlayerAnimator _playerAnimator;
-        private Vector3 _moveInput;
-        private Vector3 _move;
-        internal Vector2 currentBlendAnim;
-        private Vector2 _animVelosity;
-        private bool _isGround;
-        internal bool isRun;
-        internal bool isWalk;
-        internal bool isAim;
-        private float _currentSpeed;
-        [SerializeField] private float _jumpHeight = 1f;
-        private Vector3 _playerVelosity;
-        [SerializeField] private LayerMask _ignoreMask;
-        [SerializeField] private LayerMask _driveMask;
+        #region MoveSettings
+
         [SerializeField] private float _playerWalkSpeed = 1f;
         [SerializeField] private float _playerRunSpeed = 2f;
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
+        [SerializeField] private float _jumpHeight = 1f;
+
+        private Vector3 _moveInput;
+        private Vector3 _move;
+        internal Vector2 currentBlendAnim;
+        private Vector2 _animVelosity;
+        private float _currentSpeed;
+        private Vector3 _playerVelosity;
+
+        #endregion
+
+        #region DriveAreaParameters
+
+        [SerializeField] private LayerMask _driveMask;
         [SerializeField] private float _maxDriveDistance = 5f;
 
-        private const float _gravityValue = -9.81f;
+        #endregion
+
+        #region PlayerParameters
+
+        private CharacterController _characterController;
+        private PlayerAnimator _playerAnimator;
+        private bool _isGround;
+        internal bool isRun;
+        internal bool isWalk;
+        internal bool isAim;
+
+        #endregion
+
+        #region Gravity
+
         [SerializeField] private float _gravityForce = 0.5f;
+        private const float _gravityValue = -9.81f;
 
-        private Transform _driverPlace;
-
+        #endregion
+        
         public Vector2 MoveInput
         {
             set
@@ -71,7 +88,7 @@ namespace PlayerSpace
             PlayerInputController.OnStratAim += StartAim;
             PlayerInputController.OnCancelAim += CancelAim;
             PlayerInputController.OnDrive += Driving;
-            SelectedCar.OnDrive += ChangePlayerControler;
+            SelectedCar.OnGetIntoTheCar += ChangePlayerControler;
         }
 
         private void Update()
@@ -202,7 +219,7 @@ namespace PlayerSpace
             PlayerInputController.OnStratAim -= StartAim;
             PlayerInputController.OnCancelAim -= CancelAim;
             PlayerInputController.OnDrive -= Driving;
-            SelectedCar.OnDrive -= Driving;
+            SelectedCar.OnGetIntoTheCar -= Driving;
         }
     }
 }
