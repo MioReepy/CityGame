@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using CarSpace;
 using UnityEngine;
 
@@ -20,14 +22,14 @@ namespace PlayerSpace
         private Vector3 _move;
         internal Vector2 currentBlendAnim;
         private Vector2 _animVelosity;
-        internal bool isGroung;
-        internal bool isJump;
+        private bool _isGround;
+        private bool _isJump;
         internal bool isRun;
         internal bool isWalk;
         internal bool isAim;
+        private float _currentSpeed;
         public bool isDrive;
         [SerializeField] private float _jumpHeight = 1f;
-        private float _gravityValue = -9.81f;
         private Vector3 _playerVelosity;
         [SerializeField] private LayerMask _ignoreMask;
         [SerializeField] private LayerMask _driveMask;
@@ -36,6 +38,9 @@ namespace PlayerSpace
         [SerializeField] private float _rotationSpeed = 2f;
         [SerializeField] private float _animSmoothTime = 0.2f;
         [SerializeField] private float _maxDriveDistance = 5f;
+
+        private const float _gravityValue = -9.81f;
+        [SerializeField] private float _gravityForce = 0.5f;
 
         public Vector2 MoveInput
         {
@@ -55,57 +60,68 @@ namespace PlayerSpace
         {
             _characterController = GetComponent<CharacterController>();
             _playerAnimator = GetComponent<PlayerAnimator>();
+            _playerVelosity = _characterController.transform.position;
+            _currentSpeed = _playerWalkSpeed;
+        }
+
+        private void OnEnable()
+        {
+            PlayerInputController.OnJump += JumpPlayer;
+            PlayerInputController.OnStartRun += StartRun;
+            PlayerInputController.OnCancelRun += CancelRun;
+            PlayerInputController.OnShoot += ShootGun;
+            PlayerInputController.OnStratAim += StartAim;
+            PlayerInputController.OnCancelAim += CancelAim;
         }
 
         private void Update()
         {
             GroundCheck();
             MovePlayer();
-            JumpPlayer();
             RotateToDirection();
+            ApplyGravity();
         }
 
         private void GroundCheck()
         {
-            isGroung = _characterController.isGrounded;
+            _isGround = _characterController.isGrounded;
 
-            if (!isGroung && _playerVelosity.y < 0)
+            if (!_isGround && _playerVelosity.y < 0)
             {
                 _playerVelosity.y = 0;
-                isJump = false;
+            }
+            
+            if(!_isGround)
+            {
+                _isJump = false;
             }
         }
 
-        private void JumpPlayer()
+        private void ApplyGravity()
         {
-            if (isGroung && isJump)
+            if (!_isGround && gameObject.transform.position.y > 0f)
             {
-                _playerVelosity.y = Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
-                _playerAnimator.JumpAnimation();
+                _characterController.Move(Vector3.up * _gravityValue * _gravityForce * Time.deltaTime);
             }
-            
-            _playerVelosity.y += _gravityValue * 2 * Time.deltaTime;
-            _characterController.Move(_playerVelosity * Time.deltaTime);
         }
 
         private void MovePlayer()
         {
-            float currentSpeed;
-
-            if (!isRun)
-            {
-                currentSpeed = _playerWalkSpeed;
-            }
-            else
-            {
-                currentSpeed = _playerRunSpeed;
-            }
-
             currentBlendAnim = Vector2.SmoothDamp(currentBlendAnim, _moveInput, ref _animVelosity, _animSmoothTime);
             _move = new Vector3(currentBlendAnim.x, 0f, currentBlendAnim.y);
             _move = _cameraTransform.right * _moveInput.x + _cameraTransform.forward * _moveInput.y;
             _move.y = 0f;
-            _characterController.Move(_move * currentSpeed * Time.deltaTime);
+            _characterController.Move(_move * _currentSpeed * Time.deltaTime);
+        }
+
+        private void JumpPlayer()
+        {
+            if (_isGround)
+            {
+                _playerVelosity.y = Mathf.Sqrt(_jumpHeight * -3.0f * _gravityValue);
+                _characterController.Move(Vector3.up * _playerVelosity.y * _gravityForce * Time.deltaTime);
+                _playerAnimator.JumpAnimation();
+            }
         }
 
         private void RotateToDirection()
@@ -115,6 +131,18 @@ namespace PlayerSpace
                 Quaternion rotation = Quaternion.Euler(0f, _cameraTransform.eulerAngles.y, 0f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotation, _rotationSpeed * Time.deltaTime);
             }
+        }
+
+        private void StartRun()
+        {
+            _currentSpeed = _playerRunSpeed;
+            isRun = true;
+        }
+
+        private void CancelRun()
+        {
+            _currentSpeed = _playerWalkSpeed;
+            isRun = false;
         }
 
         public void ShootGun()
@@ -145,6 +173,15 @@ namespace PlayerSpace
             }
         }
 
+        private void StartAim()
+        {
+            isAim = true;
+        }        
+        private void CancelAim()
+        {
+            isAim = false;
+        }
+
         public void Driving()
         {
             if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit raycastHit, _maxDriveDistance))
@@ -155,6 +192,15 @@ namespace PlayerSpace
                     isDrive = true;
                 }
             }
+        }
+        private void OnDisable()
+        {
+            PlayerInputController.OnJump -= JumpPlayer;
+            PlayerInputController.OnStartRun -= StartRun;
+            PlayerInputController.OnCancelRun -= CancelRun;
+            PlayerInputController.OnShoot -= ShootGun;
+            PlayerInputController.OnStratAim -= StartAim;
+            PlayerInputController.OnCancelAim -= CancelAim;
         }
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using CameraSpace;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +18,16 @@ namespace PlayerSpace
         private InputAction _actionDrive;
 
         #endregion
+
+        public delegate void Interact();
+
+        public static event Interact OnJump;
+        public static event Interact OnStartRun;
+        public static event Interact OnCancelRun;
+        public static event Interact OnShoot;
+        public static event Interact OnStratAim;
+        public static event Interact OnCancelAim;
+        // public static event Interact OnDrive;
         
         private void Awake()
         {
@@ -27,10 +35,10 @@ namespace PlayerSpace
             _playerController = GetComponent<PlayerController>();
             
             _actionMove = _playerInputController.actions["Move"];
+            _actionRun = _playerInputController.actions["Run"];
             _actionJump = _playerInputController.actions["Jump"];
             _actionShoot = _playerInputController.actions["Shoot"];
             _actionAim = _playerInputController.actions["Aim"];
-            _actionRun = _playerInputController.actions["Run"];
             _actionDrive = _playerInputController.actions["Drive"];
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -38,12 +46,12 @@ namespace PlayerSpace
 
         private void OnEnable()
         {
+            _actionRun.canceled += _ => CancelRun();
+            _actionRun.performed += _ => StartRun();
             _actionShoot.performed += _ => Shooting();
-            _actionDrive.performed += _ => Driveing();
             _actionAim.performed += _ => StartAim();
             _actionAim.canceled += _ => CancelAim();
-            _actionRun.performed += _ => StartRun();
-            _actionRun.canceled += _ => CancelRun();
+            _actionDrive.performed += _ => Driveing();
         }
 
         private void Update()
@@ -67,37 +75,37 @@ namespace PlayerSpace
             }
         }
 
-        private void Shooting()
-        {
-            _playerController.ShootGun();
-        }
-
         private void StartRun()
         {
-            _playerController.isRun = true;
+            OnStartRun?.Invoke();
         }
 
         private void CancelRun()
         {
-            _playerController.isRun = false;
+            OnCancelRun?.Invoke();
         }
 
         private void Jump()
         {
             if (_actionJump.triggered)
             {
-                _playerController.isJump = true;
+                OnJump?.Invoke();
             }
+        }
+
+        private void Shooting()
+        {
+            OnShoot?.Invoke();
         }
 
         private void StartAim()
         {
-            _playerController.isAim = true;
+            OnStratAim?.Invoke();
         }
 
         private void CancelAim()
         {
-            _playerController.isAim = false;
+            OnCancelAim?.Invoke();
         }
 
         private void Driveing()
@@ -107,12 +115,12 @@ namespace PlayerSpace
 
         private void OnDisable()
         {
+            _actionRun.canceled -= _ => CancelRun();
+            _actionRun.performed -= _ => StartRun();
             _actionShoot.performed -= _ => Shooting();
-            _actionDrive.performed -= _ => Driveing();
             _actionAim.performed -= _ => StartAim();
             _actionAim.canceled -= _ => CancelAim();
-            _actionRun.performed -= _ => StartRun();
-            _actionRun.canceled -= _ => CancelRun();
+            _actionDrive.performed -= _ => Driveing();
         }
     }
 }
