@@ -34,7 +34,6 @@ namespace PlayerSpace
 
         #region DriveAreaParameters
 
-        [SerializeField] private LayerMask _driveMask;
         [SerializeField] private float _maxDriveDistance = 5f;
 
         #endregion

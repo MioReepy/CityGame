@@ -15,10 +15,10 @@ namespace PlayerSpace
 
         #region AreaSettings
 
-        [Range(0, 360)] public float viewAngle;
+        [Range(0, 360)] [SerializeField] internal float viewAngle = 5f;
+        [Range(0, 50)] [SerializeField] internal float viewRadius = 5f;
         [SerializeField] private float _delayTime = 0.2f;
         public List<Transform> VisibleTarget;
-        internal float viewRadius;
 
         #endregion
 
