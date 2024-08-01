@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using CarSpace;
 using UnityEngine;
 
@@ -23,7 +21,6 @@ namespace PlayerSpace
         internal Vector2 currentBlendAnim;
         private Vector2 _animVelosity;
         private bool _isGround;
-        private bool _isJump;
         internal bool isRun;
         internal bool isWalk;
         internal bool isAim;
@@ -72,6 +69,8 @@ namespace PlayerSpace
             PlayerInputController.OnShoot += ShootGun;
             PlayerInputController.OnStratAim += StartAim;
             PlayerInputController.OnCancelAim += CancelAim;
+            PlayerInputController.OnDrive += Driving;
+            SelectedCar.OnDrive += ChangePlayerControler;
         }
 
         private void Update()
@@ -90,11 +89,6 @@ namespace PlayerSpace
             {
                 _playerVelosity.y = 0;
             }
-            
-            if(!_isGround)
-            {
-                _isJump = false;
-            }
         }
 
         private void ApplyGravity()
@@ -110,7 +104,6 @@ namespace PlayerSpace
             currentBlendAnim = Vector2.SmoothDamp(currentBlendAnim, _moveInput, ref _animVelosity, _animSmoothTime);
             _move = new Vector3(currentBlendAnim.x, 0f, currentBlendAnim.y);
             _move = _cameraTransform.right * _moveInput.x + _cameraTransform.forward * _moveInput.y;
-            _move.y = 0f;
             _characterController.Move(_move * _currentSpeed * Time.deltaTime);
         }
 
@@ -176,7 +169,8 @@ namespace PlayerSpace
         private void StartAim()
         {
             isAim = true;
-        }        
+        }
+
         private void CancelAim()
         {
             isAim = false;
@@ -193,6 +187,12 @@ namespace PlayerSpace
                 }
             }
         }
+
+        private void ChangePlayerControler()
+        {
+            gameObject.SetActive(false);
+        }
+
         private void OnDisable()
         {
             PlayerInputController.OnJump -= JumpPlayer;
@@ -201,6 +201,8 @@ namespace PlayerSpace
             PlayerInputController.OnShoot -= ShootGun;
             PlayerInputController.OnStratAim -= StartAim;
             PlayerInputController.OnCancelAim -= CancelAim;
+            PlayerInputController.OnDrive -= Driving;
+            SelectedCar.OnDrive -= Driving;
         }
     }
 }

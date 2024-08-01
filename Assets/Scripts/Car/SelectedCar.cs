@@ -9,7 +9,10 @@ namespace CarSpace
         private PlayerInput _playerInput;
         private CarController _carController;
         private CarInputController _carInputController;
-        internal static bool canDrive;
+        
+        public delegate void Drive();
+
+        public static Drive OnDrive;
 
         private void Start()
         {
@@ -22,7 +25,7 @@ namespace CarSpace
             _playerInput.enabled = true;
             _carController.enabled = true;
             _carInputController.enabled = true;
-            canDrive = true;
+            OnDrive?.Invoke();
         }
     }
 }

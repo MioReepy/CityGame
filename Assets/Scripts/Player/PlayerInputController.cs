@@ -20,14 +20,13 @@ namespace PlayerSpace
         #endregion
 
         public delegate void Interact();
-
         public static event Interact OnJump;
         public static event Interact OnStartRun;
         public static event Interact OnCancelRun;
         public static event Interact OnShoot;
         public static event Interact OnStratAim;
         public static event Interact OnCancelAim;
-        // public static event Interact OnDrive;
+        public static event Interact OnDrive;
         
         private void Awake()
         {
@@ -56,11 +55,11 @@ namespace PlayerSpace
 
         private void Update()
         {
-            Move();
-            Jump();
+            Moving();
+            Jumping();
         }
 
-        private void Move()
+        private void Moving()
         {
             Vector2 input = _actionMove.ReadValue<Vector2>();
             _playerController.MoveInput = input;
@@ -85,7 +84,7 @@ namespace PlayerSpace
             OnCancelRun?.Invoke();
         }
 
-        private void Jump()
+        private void Jumping()
         {
             if (_actionJump.triggered)
             {
@@ -110,7 +109,7 @@ namespace PlayerSpace
 
         private void Driveing()
         {
-            _playerController.Driving();
+            OnDrive?.Invoke();
         }
 
         private void OnDisable()
