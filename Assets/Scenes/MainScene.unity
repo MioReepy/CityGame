@@ -353956,12 +353956,9 @@ MonoBehaviour:
   _playerRunSpeed: 8
   _rotationSpeed: 8
   _animSmoothTime: 0.2
-  _jumpHeight: 1
-  _driveMask:
-    serializedVersion: 2
-    m_Bits: 1024
+  _jumpHeight: 500
   _maxDriveDistance: 8.79
-  _gravityForce: 0.5
+  _gravityForce: 0.1
 --- !u!114 &2037407621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354045,6 +354042,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   viewAngle: 90
+  viewRadius: 5
   _delayTime: 0.2
   VisibleTarget: []
 --- !u!1001 &2037761634
@@ -372965,8 +372963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591762aea4b74b740bec0c9c90213b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _playerPlace: {fileID: 0}
+  _player: {fileID: 2037407614}
+  _playerPlace: {fileID: 1614161936}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
